@@ -1,0 +1,39 @@
+{% extends "portal/base.html" %}
+{% load static %}
+
+{% block body_css %}
+background: url('{% static "img/g1bg.png" %}') no-repeat center center fixed;
+{% endblock %}
+
+{% block navbar %}
+<ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#">Coins: {{ player.coins|default:0 }}</a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<h1>{{ request.user }}'s Stinkies</h1>
+<h2>Your coins: {{ player.coins|default:0 }}</h2>
+<h2>Your inventory:</h2>
+<div class="d-flex flex-row mb-3">
+    {% for stinky in inventory %}
+    <div class="card border-success mr-2">
+        <div class="card-body">
+            <h4 class="card-title">{{ stinky }}</h4>
+            <a class="btn btn-info btn-sm" href="#">Trade</a>
+            <a class="btn btn-secondary btn-sm" href="#">Sell</a>
+        </div>
+    </div>
+    {% endfor %}
+    {% if player.coins >= 2 %}
+    <div class="card border-warning mr-2">
+        <div class="card-body">
+            <h4>Buy a stinky</h4>
+            <a class="btn btn-warning" href="{% url "game1:buy-new-stinky" %}">2 coins</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

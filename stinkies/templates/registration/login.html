@@ -1,0 +1,14 @@
+{% extends "portal/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<h1>Sign in with your player name</h1>
+<form method="post" action="{% url "login" %}">{% csrf_token %}
+    {% bootstrap_form form %}
+
+    {% buttons %}
+    <button type="submit" class="btn btn-info">Sign in</button>
+    <a href="{% url "django_registration_register" %}" class="btn btn-secondary">New player</a>
+    {% endbuttons %}
+</form>
+{% endblock %}
