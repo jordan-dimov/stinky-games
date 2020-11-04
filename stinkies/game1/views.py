@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
-from game1.models import Player
-from game1.services import buy_a_stinky
+from game1.models import InventoryItem, Player
+from game1.services import buy_a_stinky, sell_back_stinky
 
 
 def get_player(request):
@@ -34,4 +34,13 @@ def buy_new_stinky_view(request):
     else:
         messages.error(request, "Sorry! You don't have enough coins for a new stinky.")
 
+    return redirect('game1:homepage')
+
+
+@login_required()
+def sell_back_stinky_view(request, inventory_item_id):
+    player = get_player(request)
+    inventory_item = get_object_or_404(InventoryItem, id=inventory_item_id, user=player.user)
+    sell_price = sell_back_stinky(player, inventory_item)
+    messages.success(request, "Sold a stinky for {} coin(s).".format(sell_price))
     return redirect('game1:homepage')

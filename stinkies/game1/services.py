@@ -22,3 +22,12 @@ def buy_a_stinky(player):
         player.save()
         return item
     return None
+
+
+@db_transaction.atomic
+def sell_back_stinky(player, inventory_item):
+    sell_price = max(1, round((inventory_item.bought_for or 0) / 2))
+    inventory_item.delete()
+    player.coins += sell_price
+    player.save()
+    return sell_price
