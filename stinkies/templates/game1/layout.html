@@ -1,0 +1,19 @@
+{% extends "portal/base.html" %}
+{% load static %}
+
+{% block body_css %}
+    background: url('{% static "img/g1bg.png" %}') no-repeat center center fixed;
+{% endblock %}
+
+{% block navbar %}
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "game1:homepage" %}">{{ request.user }}'s Stinkies</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Coins: {{ player.coins|default:0 }}</a>
+        </li>
+    </ul>
+{% endblock %}
+
+

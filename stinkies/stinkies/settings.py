@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django_extensions",
     "bootstrap4",
+    "friendship",
     "portal",
     "game1",
 ]
@@ -134,9 +135,6 @@ STATIC_URL = "/static/"
 STATIC_ROOT = here("static")
 
 BOOTSTRAP4 = {"include_jquery": True, "set_placeholder": False}
-
-AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
 
 AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]

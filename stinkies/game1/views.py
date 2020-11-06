@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from friendship.models import Friend
 
 from game1.models import InventoryItem, Player
 from game1.services import buy_a_stinky, sell_back_stinky
@@ -20,6 +21,7 @@ def homepage_view(request):
     context = {
         'player': player,
         'inventory': request.user.inventory.all(),
+        'friends': Friend.objects.friends(request.user),
     }
     return render(request, "game1/homepage.html", context=context)
 
@@ -44,3 +46,4 @@ def sell_back_stinky_view(request, inventory_item_id):
     sell_price = sell_back_stinky(player, inventory_item)
     messages.success(request, "Sold a stinky for {} coin(s).".format(sell_price))
     return redirect('game1:homepage')
+

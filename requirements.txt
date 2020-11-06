@@ -5,3 +5,4 @@ django-amazon-ses
 django-bootstrap4
 django-extensions
 django-registration
+django-friendship
