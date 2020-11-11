@@ -10,28 +10,33 @@
         <div class="card border-success mr-2 mb-2">
             <div class="card-body">
                 <h4 class="card-title">{{ stinky }}</h4>
-                <a class="btn btn-info btn-sm" href="#">Trade</a>
+                {% if stinky.is_for_trade %}
+                <a class="btn btn-danger btn-sm" href="{% url "game1:dont-trade-stinky" stinky.id %}">Don't trade</a>
+                {% else %}
+                <a class="btn btn-info btn-sm" href="{% url "game1:trade-stinky" stinky.id %}">Trade</a>
+                {% endif %}
                 <a class="btn btn-secondary btn-sm" href="{% url "game1:sell-back-stinky" stinky.id %}">Sell</a>
             </div>
         </div>
     {% endfor %}
     </div>
-    {% if player.coins >= 2 %}
     <div class="col-4">
+        {% if player.coins >= 2 %}
         <div class="card border-warning mb-4">
             <div class="card-body">
                 <h4>Buy a stinky</h4>
                 <a class="btn btn-warning" href="{% url "game1:buy-new-stinky" %}">2 coins</a>
             </div>
         </div>
+        {% endif %}
+
         <h2>Your friends:</h2>
         {% for friend in friends %}
-            <a href="#" class="btn btn-outline-success">{{ friend }}</a>
+            <a href="{% url "game1:view-player" friend %}" class="btn btn-outline-success">{{ friend }}</a>
         {% endfor %}
         <div class="text-center">
             <a class="btn btn-primary" href="{% url "friendship_view_users" %}">Add a friend</a>
         </div>
     </div>
-    {% endif %}
 </div>
 {% endblock %}

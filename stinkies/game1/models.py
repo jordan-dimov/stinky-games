@@ -27,7 +27,18 @@ class InventoryItem(TimeStampedModel):
     def __str__(self):
         return str(self.item)
 
+    def is_for_trade(self):
+        return self.item.for_trade.first()
+
 
 class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     coins = models.PositiveIntegerField(default=DEFAULT_NEW_PLAYER_COINS)
+
+    def __str__(self):
+        return "{}".format(self.user)
+
+
+class WantsToTrade(TimeStampedModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="wants_to_trade")
+    item = models.ForeignKey(Stinky, on_delete=models.CASCADE, related_name='for_trade')

@@ -1,0 +1,24 @@
+{% extends "game1/layout.html" %}
+
+{% block content %}
+    <h1>{{ player2 }}'s Stinkies</h1>
+    <h2>Their inventory:</h2>
+    <div class="row mb-3">
+        <div class="col-8">
+            {% for stinky in player2.user.inventory.all %}
+                <div class="card {% if stinky.is_for_trade %}border-danger{% else %}border-success{% endif %} mr-2 mb-2">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ stinky }}</h4>
+                        {% comment %}
+                        <a class="btn btn-info btn-sm" href="#">Trade</a>
+                        <a class="btn btn-secondary btn-sm" href="{% url "game1:sell-back-stinky" stinky.id %}">Sell</a>
+                        {% endcomment %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-4">
+
+        </div>
+    </div>
+{% endblock %}

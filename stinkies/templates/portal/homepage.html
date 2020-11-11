@@ -31,4 +31,28 @@
 <div class="text-center">
     <a href="{% url "game1:homepage" %}" class="btn btn-lg btn-info">Play Stinkies</a>
 </div>
+
+{% if frqs %}
+    <form class="d-none" id="frq_form" method="POST" action="">{% csrf_token %}
+        <input type="submit" value="action friend request" />
+    </form>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+function accept_frq(username) {
+    var frm = $('#frq_form');
+    base_url = "{% url "friendship_accept" 0 %}";
+    post_url = base_url.replace('0', username);
+    frm.attr('action', post_url);
+    frm.submit();
+};
+
+function reject_frq(username) {
+    var frm = $('#frq_form');
+    base_url = "{% url "friendship_reject" 0 %}";
+    post_url = base_url.replace('0', username);
+    frm.attr('action', post_url);
+    frm.submit();
+};
 {% endblock %}

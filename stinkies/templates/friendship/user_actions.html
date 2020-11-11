@@ -1,19 +1,38 @@
 {% extends "game1/layout.html" %}
 
 {% block content %}
-<ul>
-{% for list_user in users %}
-    {% if user and list_user != user %}
-    <li>
-        {{ list_user.username }} ({{ list_user.inventory.count }} stinkies) | <a href="{% url 'friendship_add_friend' list_user.username %}">add as friend</a> | <a href="{% url 'follower_add' list_user.username %}">follow user</a>
-    </li>
-    {% endif %}
-{% endfor %}
-{% if users.count < 2 %}
-    <p>There are no more player you can add.</p>
-{% endif %}
-</ul>
-<div class="text-center">
-    <a href="#" class="btn btn-secondary disabled">Invite a friend</a>
+<div class="row">
+    <div class="col">
+        <ul>
+        {% for list_user in users %}
+            {% if user and list_user != user %}
+            <li>
+                {{ list_user.username }} ({{ list_user.inventory.count }} stinkies) | <a href="#" onclick="add_friend('{{ list_user.username }}');">add as friend</a> | <a href="{% url 'follower_add' list_user.username %}">follow user</a>
+            </li>
+            {% endif %}
+        {% endfor %}
+        {% if users.count < 2 %}
+            <p>There are no more player you can add.</p>
+        {% endif %}
+        </ul>
+        <div class="text-center">
+            <a href="#" class="btn btn-secondary disabled">Invite a friend</a>
+        </div>
+    </div>
+    <div class="col">
+        <form id="controlForm" method="post" action="">{% csrf_token %}
+            <input type="submit" value="add friend" />
+        </form>
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+function add_friend(username) {
+    base_url = "{% url 'friendship_add_friend' 'XXXX' %}";
+    post_url = base_url.replace('XXXX', username);
+    frm = $('#controlForm');
+    frm.attr('action', post_url);
+    frm.submit();
+};
 {% endblock %}
